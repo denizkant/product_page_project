@@ -22,12 +22,12 @@ class _MyHomePageState extends State<MyHomePage> {
   ];
   final List<Icon?> icons = [
     null,
-    Icon(Icons.headphones),
-    Icon(Icons.earbuds_sharp),
-    Icon(Icons.phone_android),
-    Icon(Icons.watch),
-    Icon(Icons.camera),
-    Icon(Icons.done_rounded)
+    const Icon(Icons.headphones),
+    const Icon(Icons.earbuds_sharp),
+    const Icon(Icons.phone_android),
+    const Icon(Icons.watch),
+    const Icon(Icons.camera),
+    const Icon(Icons.done_rounded)
   ];
   final List<Products> products = <Products>[
     Products(
@@ -61,9 +61,43 @@ class _MyHomePageState extends State<MyHomePage> {
         discount: '20% Off',
         prize: 29.999),
   ];
+  int _selectedIndex = 0;
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: NavigationBar(
+        onDestinationSelected: (int index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
+        indicatorColor: Colors.blueGrey,
+        selectedIndex: _selectedIndex,
+        destinations: const <Widget>[
+          NavigationDestination(
+              selectedIcon: Icon(Icons.home),
+              icon: Icon(Icons.home_outlined),
+              label: 'Home'),
+          NavigationDestination(
+              selectedIcon: Icon(Icons.shopping_bag),
+              icon: Icon(Icons.shopping_bag_outlined),
+              label: 'Shopping Bag'),
+          NavigationDestination(
+              selectedIcon: Icon(Icons.favorite),
+              icon: Icon(Icons.favorite_border_outlined),
+              label: 'Favorite'),
+          NavigationDestination(
+              selectedIcon: Icon(Icons.person_2),
+              icon: Icon(Icons.person_2_outlined),
+              label: 'Account')
+        ],
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -96,18 +130,16 @@ class _MyHomePageState extends State<MyHomePage> {
       child: GridView.builder(
           itemCount: products.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 8,
-            mainAxisSpacing: 8,
-            childAspectRatio: 0.9
-          ),
+              crossAxisCount: 2,
+              crossAxisSpacing: 8,
+              mainAxisSpacing: 8,
+              childAspectRatio: 0.9),
           itemBuilder: (BuildContext context, int index) {
             var item = products[index];
             return Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                  color: Colors.white, 
-                  borderRadius: BorderRadius.circular(16)),
+                  color: Colors.white, borderRadius: BorderRadius.circular(16)),
               child: Column(
                 children: [
                   Image.asset(
@@ -125,13 +157,16 @@ class _MyHomePageState extends State<MyHomePage> {
                           Spacer(),
                           FittedBox(
                             child: Container(
-                              padding: EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                color: item.discount.contains('Free') ?  Colors.blue.shade900 : Colors.red,
-                                borderRadius: BorderRadius.circular(8)
-                              ),
-                              child: 
-                                Text('${item.discount}',style: TextStyle(color: Colors.white),)),
+                                padding: EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                    color: item.discount.contains('Free')
+                                        ? Colors.blue.shade900
+                                        : Colors.red,
+                                    borderRadius: BorderRadius.circular(8)),
+                                child: Text(
+                                  '${item.discount}',
+                                  style: TextStyle(color: Colors.white),
+                                )),
                           )
                         ],
                       ),
@@ -164,9 +199,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   borderRadius: const BorderRadius.all(Radius.circular(8))),
               child: Row(
                 children: [
-                  if(icons[index]!= null)...[
-                  icons[index]!,
-                  const SizedBox(width: 8),
+                  if (icons[index] != null) ...[
+                    icons[index]!,
+                    const SizedBox(width: 8),
                   ],
                   Text(entries[index])
                 ],
