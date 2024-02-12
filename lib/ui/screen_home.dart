@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:products_page_project/models/models_products.dart';
+import 'package:products_page_project/ui/screen_account.dart';
+import 'package:products_page_project/ui/screen_shopping_bag.dart';
+import 'package:products_page_project/ui/screen_favorite.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -11,6 +14,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
   final List<String> entries = <String>[
     'All',
     'Headphone',
@@ -61,43 +65,11 @@ class _MyHomePageState extends State<MyHomePage> {
         discount: '20% Off',
         prize: 29.999),
   ];
-  int _selectedIndex = 0;
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: NavigationBar(
-        onDestinationSelected: (int index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-        indicatorColor: Colors.blueGrey,
-        selectedIndex: _selectedIndex,
-        destinations: const <Widget>[
-          NavigationDestination(
-              selectedIcon: Icon(Icons.home),
-              icon: Icon(Icons.home_outlined),
-              label: 'Home'),
-          NavigationDestination(
-              selectedIcon: Icon(Icons.shopping_bag),
-              icon: Icon(Icons.shopping_bag_outlined),
-              label: 'Shopping Bag'),
-          NavigationDestination(
-              selectedIcon: Icon(Icons.favorite),
-              icon: Icon(Icons.favorite_border_outlined),
-              label: 'Favorite'),
-          NavigationDestination(
-              selectedIcon: Icon(Icons.person_2),
-              icon: Icon(Icons.person_2_outlined),
-              label: 'Account')
-        ],
-      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
